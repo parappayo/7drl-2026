@@ -5,3 +5,11 @@ This is my entry for [7DRL Challenge 2026](https://itch.io/jam/7drl-challenge-20
 ## Goals
 
 Because this is my first time participating, my intention is to put together a fairly minimal, vanilla Rogue-like. I'm using TypeScript + HTML canvas so that the result will be easily playable in a browser without users needing to install anything or run untrusted binary executables.
+
+## Dev Setup
+
+For first-time setup, run `npm install`.
+
+In a new shell, run `npm run watch` to start the TypeScript compiler.
+
+In another shell run  `npm run serve` to start the HTTP server.
