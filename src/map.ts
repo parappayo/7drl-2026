@@ -58,6 +58,12 @@ export class GameMap {
         return this.tileMap[tileID] || this.emptyTile;
     }
 
+    setIfEmpty(x: number, y: number, tileID: string): void {
+        if (this.inBounds(x, y) && this.tiles[y * this.width + x] === 'empty') {
+            this.tiles[y * this.width + x] = tileID;
+        }
+    }
+
     render(ctx: CanvasRenderingContext2D, x: number, y: number) {
         ctx.fillStyle = '#000000';
         ctx.fillRect(x, y, this.width * 16, this.height * 16);
@@ -77,21 +83,24 @@ export class GameMap {
         }
     }
 
-    findViewVolume(x: number, y: number): ViewVolume | null {
+    findViewVolume(x: number, y: number): ViewVolume[] {
+        const volumes: ViewVolume[] = [];
         for (const vol of this.viewVolumes) {
             if (x >= vol.left && x <= vol.right && y >= vol.top && y <= vol.bottom) {
-                return vol;
+                volumes.push(vol);
             }
         }
-        return null;
+        return volumes;
     }
 
     hasLineOfSight(x1: number, y1: number, x2: number, y2: number): boolean {
         // https://www.roguebasin.com/index.php/Extremely_fast_simplified_LOS
         const vol1 = this.findViewVolume(x1, y1);
         const vol2 = this.findViewVolume(x2, y2);
-        if (vol1 && vol2 && vol1 === vol2) {
-            return true;
+        for (const v1 of vol1) {
+            if (vol2.some(v2 => v1 === v2)) {
+                return true;
+            }
         }
         return false;
     }
@@ -144,18 +153,21 @@ export class GameMap {
         const minX = Math.min(x1, x2);
         const maxX = Math.max(x1, x2);
         for (let x = minX; x <= maxX; x++) {
-
-            this.tiles[y * this.width + x] = 'corridor';
+            this.setIfEmpty(x, y - 1, 'wall');
+            this.setIfEmpty(x, y, 'corridor');
+            this.setIfEmpty(x, y + 1, 'wall');
         }
-        this.viewVolumes.push(new ViewVolume(minX, y, maxX, y));
+        this.viewVolumes.push(new ViewVolume(minX, y - 1, maxX, y + 1));
     }
 
     addVerticalCorridor(x: number, y1: number, y2: number) {
         const minY = Math.min(y1, y2);
         const maxY = Math.max(y1, y2);
         for (let y = minY; y <= maxY; y++) {
-            this.tiles[y * this.width + x] = 'corridor';
+            this.setIfEmpty(x - 1, y, 'wall');
+            this.setIfEmpty(x, y, 'corridor');
+            this.setIfEmpty(x + 1, y, 'wall');
         }
-        this.viewVolumes.push(new ViewVolume(x, minY, x, maxY));
+        this.viewVolumes.push(new ViewVolume(x - 1, minY, x + 1, maxY));
     }
 }

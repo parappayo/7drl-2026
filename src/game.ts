@@ -15,6 +15,7 @@ export class Game {
         this.gameMap.addRoom(5, 5, 10, 8);
         this.gameMap.addRoom(20, 10, 15, 12);
         this.gameMap.addDoor(14, 11)
+        this.gameMap.addDoor(20, 11)
         this.gameMap.addHorizontalCorridor(11, 15, 20);
 
         this.player = new Player();
