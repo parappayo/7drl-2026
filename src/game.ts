@@ -15,7 +15,9 @@ export function init(): void {
     }
 
     console.log('Canvas initialized');
-    const gameMap = new GameMap(40, 25);
+    const gameMap = new GameMap(50, 36);
+    gameMap.addRoom(5, 5, 10, 8);
+    gameMap.addRoom(20, 10, 15, 12);
     gameMap.drawToCanvas(ctx, 0, 0);
 }
 
