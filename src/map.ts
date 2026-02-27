@@ -1,6 +1,3 @@
-export interface Renderable {
-    drawToCanvas(ctx: CanvasRenderingContext2D, x: number, y: number): void;
-}
 
 export interface Tile {
     id: string;
@@ -9,7 +6,7 @@ export interface Tile {
     color?: string;
 }
 
-export class GameMap implements Renderable {
+export class GameMap {
     width: number;
     height: number;
     tiles: string[];
@@ -26,7 +23,7 @@ export class GameMap implements Renderable {
         this.tiles = new Array(width * height).fill('empty');
     }
 
-    drawToCanvas(ctx: CanvasRenderingContext2D, x: number, y: number) {
+    render(ctx: CanvasRenderingContext2D, x: number, y: number) {
         ctx.fillStyle = '#000';
 
         for (let i = 0; i < this.tiles.length; i++) {
