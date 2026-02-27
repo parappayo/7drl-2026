@@ -1,3 +1,4 @@
+import { Actor } from './actor.js';
 import { GameMap } from './map.js';
 import { Player } from './player.js';
 
@@ -5,6 +6,7 @@ export class Game {
     ctx: CanvasRenderingContext2D;
     gameMap: GameMap;
     player: Player;
+    actors: Actor[] = [];
 
     constructor(ctx: CanvasRenderingContext2D) {
         this.ctx = ctx;
@@ -19,6 +21,7 @@ export class Game {
         this.player.y = 10;
         this.player.glyph = '@';
         this.player.color = '#ff0000';
+        this.actors.push(this.player);
 
         window.addEventListener('keydown', this.onKeyDown);
 
@@ -31,11 +34,16 @@ export class Game {
 
     render(): void {
         this.gameMap.render(this.ctx, 0, 0);
-        this.player.render(this.ctx);
+        this.actors.forEach(actor => this.renderActor(this.ctx, actor));
+    }
+
+    renderActor(ctx: CanvasRenderingContext2D, actor: Actor): void {
+        ctx.fillStyle = actor.color;
+        ctx.fillText(actor.glyph, actor.x * 16 + 4, actor.y * 16 + 12);
     }
 
     tick(): void {
-        this.player.tick();
+        this.actors.forEach(actor => actor.tick());
     }
 
     private onKeyDown = (e: KeyboardEvent): void => {

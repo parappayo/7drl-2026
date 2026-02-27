@@ -10,9 +10,4 @@ export class Player implements Actor {
     tick(): void {
         // TODO: resolve time-based effects like hunger, healing
     }
-
-    render(ctx: CanvasRenderingContext2D): void {
-        ctx.fillStyle = this.color;
-        ctx.fillText(this.glyph, this.x * 16 + 4, this.y * 16 + 12);
-    }
 }
