@@ -78,7 +78,9 @@ export class Game {
     private movePlayer(dx: number, dy: number): void {
         const newX = this.player.x + dx;
         const newY = this.player.y + dy;
-        this.player.x = newX;
-        this.player.y = newY;
+        if (this.gameMap.isWalkable(newX, newY)) {
+            this.player.x = newX;
+            this.player.y = newY;
+        }
     }
 }

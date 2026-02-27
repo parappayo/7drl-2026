@@ -11,8 +11,10 @@ export class GameMap {
     height: number;
     tiles: string[];
 
+    emptyTile: Tile = { id: 'empty', glyph: ' ', walkable: false, color: '#000000' };
+
     tileMap: Record<string, Tile> = {
-        'empty': { id: 'empty', glyph: ' ', walkable: false, color: '#000000' },
+        'empty': this.emptyTile,
         'floor': { id: 'floor', glyph: '.', walkable: true, color: '#e4e4e4' },
         'wall': { id: 'wall', glyph: '#', walkable: false, color: '#929292' },
     };
@@ -23,14 +25,27 @@ export class GameMap {
         this.tiles = new Array(width * height).fill('empty');
     }
 
+    inBounds(x: number, y: number): boolean {
+        return x >= 0 && x < this.width && y >= 0 && y < this.height;
+    }
+
+    getTile(x: number, y?: number): Tile {
+        let tileID: string;
+        if (y === undefined) {
+            tileID = this.tiles[x] || 'empty';
+        } else {
+            tileID = (this.inBounds(x, y) && this.tiles[y * this.width + x]) || 'empty';
+        }
+        return this.tileMap[tileID] || this.emptyTile;
+    }
+
     render(ctx: CanvasRenderingContext2D, x: number, y: number) {
         ctx.fillStyle = '#000';
 
         for (let i = 0; i < this.tiles.length; i++) {
-            const tileID = this.tiles[i] || 'floor';
+            const tile = this.getTile(i);
             const tileX = x + (i % this.width) * 16;
             const tileY = y + Math.floor(i / this.width) * 16;
-            const tile = this.tileMap[tileID];
 
             ctx.fillStyle = tile?.color || '#ffffff';
             ctx.fillRect(tileX, tileY, 16, 16);
@@ -49,5 +64,13 @@ export class GameMap {
                 }
             }
         }
+    }
+
+    isWalkable(x: number, y: number): boolean {
+        if (x < 0 || x >= this.width || y < 0 || y >= this.height) {
+            return false;
+        }
+        const tile = this.getTile(x, y);
+        return tile ? tile.walkable : false;
     }
 }
