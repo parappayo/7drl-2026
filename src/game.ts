@@ -1,6 +1,7 @@
 import { Actor } from './actor.js';
 import { GameMap } from './map.js';
 import { Player } from './player.js';
+import { Snake } from './enemies/snake.js';
 
 export class Game {
     ctx: CanvasRenderingContext2D;
@@ -17,6 +18,9 @@ export class Game {
         this.gameMap.addDoor(14, 11)
         this.gameMap.addDoor(20, 11)
         this.gameMap.addHorizontalCorridor(11, 15, 20);
+
+        const snake = new Snake(7, 7);
+        this.actors.push(snake);
 
         this.player = new Player();
         this.player.x = 10;
@@ -46,7 +50,7 @@ export class Game {
     }
 
     tick(): void {
-        this.actors.forEach(actor => actor.tick());
+        this.actors.forEach(actor => actor.tick(this));
     }
 
     private onKeyDown = (e: KeyboardEvent): void => {

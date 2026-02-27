@@ -36,3 +36,22 @@ use of heavy algorithmic stuff altogether, and instead rely on simple rules.
 
 I will NOT be using AI generated art assets. Any sprites, audio, etc. that I
 include will be created by myself or another human with proper credit given.
+
+## Helpful References
+
+- [7DRL Challenge 2026 on itch.io](https://itch.io/jam/7drl-challenge-2026)
+- [Rogue on Wikipedia](https://en.wikipedia.org/wiki/Rogue_(video_game))
+- [The TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html)
+
+### Algorithms
+
+- [Extremely Fast Simplified LOS](https://www.roguebasin.com/index.php/Extremely_fast_simplified_LOS)
+- [Bresenham's Line Algo](https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm)
+
+### Roguelikes
+
+- [RogueBasin](https://roguebasin.com/index.php/Main_Page)
+- [Nethack](https://www.nethack.org/)
+- [Tales of Maj'Eyal](https://te4.org/)
+- [Dwarf Fortress](https://www.bay12games.com/dwarves/)
+- [Zettai Hero Project](http://www.hardcoregaming101.net/z-h-p-zettai-hero-project/)

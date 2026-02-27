@@ -1,4 +1,5 @@
 import { Actor } from "./actor";
+import { Game } from "./game";
 
 export class Player implements Actor {
     type: string = 'player';
@@ -7,7 +8,7 @@ export class Player implements Actor {
     glyph: string = '@';
     color: string = '#0000ff';
 
-    tick(): void {
+    tick(game: Game): void {
         // TODO: resolve time-based effects like hunger, healing
     }
 }

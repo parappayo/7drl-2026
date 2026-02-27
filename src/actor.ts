@@ -1,3 +1,4 @@
+import { Game } from "./game";
 
 export interface Actor {
     type: string;
@@ -6,5 +7,5 @@ export interface Actor {
     glyph: string;
     color: string;
 
-    tick(): void;
+    tick(game: Game): void;
 }
