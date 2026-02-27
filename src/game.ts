@@ -14,7 +14,8 @@ export class Game {
         this.gameMap = new GameMap(50, 36);
         this.gameMap.addRoom(5, 5, 10, 8);
         this.gameMap.addRoom(20, 10, 15, 12);
-        this.gameMap.render(ctx, 0, 0);
+        this.gameMap.addDoor(14, 11)
+        this.gameMap.addHorizontalCorridor(11, 15, 20);
 
         this.player = new Player();
         this.player.x = 10;
@@ -25,6 +26,7 @@ export class Game {
 
         window.addEventListener('keydown', this.onKeyDown);
 
+        this.calculateSeenTiles();
         this.render();
     }
 
@@ -90,5 +92,10 @@ export class Game {
             this.player.x = newX;
             this.player.y = newY;
         }
+        this.calculateSeenTiles();
+    }
+
+    private calculateSeenTiles(): void {
+        this.gameMap.calculateSeenTiles(this.player.x, this.player.y, 30);
     }
 }
