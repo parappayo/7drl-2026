@@ -22,3 +22,17 @@ In another shell run `npm run serve` to start the HTTP server.
 
 If you edit files in `public/` then you'll need `npm run build` again to re-copy
 them to `build/`.
+
+## Statement on Use of AI
+
+I am using VS Code with Copilot, which includes the use of LLM generated code to
+speed up development. I do not consider this "vibe coding" since I am directing
+Copilot to make small, incremental changes which I then manually correct to end
+up with code similar to what I would have written myself.
+
+I will NOT be using AI generated code for any complex maze generation,
+pathfinding, or other algorithms used in this project. My goal is to avoid the
+use of heavy algorithmic stuff altogether, and instead rely on simple rules.
+
+I will NOT be using AI generated art assets. Any sprites, audio, etc. that I
+include will be created by myself or another human with proper credit given.
