@@ -1,13 +1,18 @@
 {
   "scripts": {
+    "clean": "rimraf build",
     "watch": "tsc --watch",
-    "build": "tsc && npm run copy-public",
+    "bundle": "esbuild src/main.ts --bundle --outfile=build/bundle.js --sourcemap --minify",
+    "dev": "esbuild src/main.ts --bundle --outfile=build/bundle.js --sourcemap --watch",
+    "build": "npm run clean && npm run bundle && npm run copy-public",
     "copy-public": "cpy \"public/**/*\" build --parents",
     "serve": "http-server build -p 8080 -o"
   },
   "devDependencies": {
     "http-server": "^14.1.1",
     "cpy-cli": "^4.1.0",
+    "esbuild": "^0.17.19",
+    "rimraf": "^5.0.5",
     "typescript": "^5.9.3"
   }
 }
