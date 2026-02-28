@@ -5,6 +5,7 @@ import { Snake } from './enemies/snake.js';
 
 export class Game {
     ctx: CanvasRenderingContext2D;
+    statusText = "hello there";
     gameMap: GameMap;
     player: Player;
     actors: Actor[] = [];
@@ -40,8 +41,13 @@ export class Game {
     }
 
     render(): void {
+        this.ctx.clearRect(0, 0, this.gameMap.width * 16, this.gameMap.height * 16 + 20);
+        this.ctx.font = '12px monospace';
         this.gameMap.render(this.ctx, 0, 0);
         this.actors.forEach(actor => this.renderActor(this.ctx, actor));
+
+        this.ctx.fillStyle = '#000000';
+        this.ctx.fillText(this.statusText, 4, 16 * this.gameMap.height + 12);
     }
 
     renderActor(ctx: CanvasRenderingContext2D, actor: Actor): void {
