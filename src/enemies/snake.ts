@@ -8,6 +8,7 @@ export class Snake implements Actor {
     glyph: string = 's';
     color: string = '#03b403';
     direction: number = 1;
+    aggro: boolean = false;
 
     constructor(x: number, y: number) {
         this.x = x;
@@ -15,6 +16,11 @@ export class Snake implements Actor {
     }
 
     tick(game: Game): void {
+        if (this.aggro) {
+            // TODO: attack player if adjacent, otherwise move towards player
+            return;
+        }
+
         if (game.gameMap.isWalkable(this.x + this.direction, this.y)) {
             this.x += this.direction;
         } else {

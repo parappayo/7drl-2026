@@ -57,6 +57,10 @@ export class Game {
         ctx.fillText(actor.glyph, actor.x * 16 + 4, actor.y * 16 + 12);
     }
 
+    findActor(x: number, y: number): Actor | undefined {
+        return this.actors.find(actor => actor.x === x && actor.y === y);
+    }
+
     tick(): void {
         this.actors.forEach(actor => actor.tick(this));
     }
@@ -64,35 +68,39 @@ export class Game {
     private onKeyDown = (e: KeyboardEvent): void => {
         let shouldTick = false;
 
+        let dx = 0;
+        let dy = 0;
         switch (e.key) {
             case 'ArrowUp':
             case 'w':
             case 'W':
-                this.movePlayer(0, -1);
+                dy = -1;
                 shouldTick = true;
                 break;
             case 'ArrowDown':
             case 's':
             case 'S':
-                this.movePlayer(0, 1);
+                dy = 1;
                 shouldTick = true;
                 break;
             case 'ArrowLeft':
             case 'a':
             case 'A':
-                this.movePlayer(-1, 0);
+                dx = -1;
                 shouldTick = true;
                 break;
             case 'ArrowRight':
             case 'd':
             case 'D':
-                this.movePlayer(1, 0);
+                dx = 1;
                 shouldTick = true;
                 break;
         }
 
         if (shouldTick) {
             e.preventDefault();
+            this.statusText = '';
+            this.movePlayer(dx, dy);
             this.tick();
             this.render();
         }
@@ -101,11 +109,15 @@ export class Game {
     private movePlayer(dx: number, dy: number): void {
         const newX = this.player.x + dx;
         const newY = this.player.y + dy;
-        if (this.gameMap.isWalkable(newX, newY)) {
+
+        const target = this.findActor(newX, newY);
+        if (target && target !== this.player) {
+            this.player.handleCollision(this, target);
+        } else if (this.gameMap.isWalkable(newX, newY)) {
             this.player.x = newX;
             this.player.y = newY;
+            this.calculateSeenTiles();
         }
-        this.calculateSeenTiles();
     }
 
     private calculateSeenTiles(): void {
