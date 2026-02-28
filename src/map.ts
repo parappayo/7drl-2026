@@ -26,15 +26,16 @@ export class GameMap {
     tiles: string[];
     seen: boolean[];
     viewVolumes: ViewVolume[] = [];
+    floorColor = '#e4e4e4';
 
     emptyTile: Tile = { id: 'empty', glyph: ' ', walkable: false, color: '#000000' };
 
     tileMap: Record<string, Tile> = {
         'empty': this.emptyTile,
-        'floor': { id: 'floor', glyph: '.', walkable: true, color: '#e4e4e4' },
+        'floor': { id: 'floor', glyph: '.', walkable: true, color: this.floorColor },
         'wall': { id: 'wall', glyph: '#', walkable: false, color: '#929292' },
-        'door': { id: 'door', glyph: '+', walkable: true, color: '#e4e4e4' },
-        'corridor': { id: 'corridor', glyph: '.', walkable: true, color: '#e4e4e4' },
+        'door': { id: 'door', glyph: '+', walkable: true, color: this.floorColor },
+        'corridor': { id: 'corridor', glyph: '.', walkable: true, color: this.floorColor },
     };
 
     constructor(width: number, height: number) {

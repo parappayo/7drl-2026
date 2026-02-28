@@ -51,6 +51,8 @@ export class Game {
     }
 
     renderActor(ctx: CanvasRenderingContext2D, actor: Actor): void {
+        ctx.fillStyle = this.gameMap.floorColor;
+        ctx.fillRect(actor.x * 16, actor.y * 16, 16, 16);
         ctx.fillStyle = actor.color;
         ctx.fillText(actor.glyph, actor.x * 16 + 4, actor.y * 16 + 12);
     }
